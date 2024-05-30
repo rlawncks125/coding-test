@@ -19,8 +19,38 @@ function solution(n) {
   return answer + 1;
 }
 
+// 슬라이딩 윈도우 방식
+function solution(n){
+  let answer= 0;
+  let sum =0;
+  let left = 0;
+
+  for(let right = 1; right<= n; right++){
+    sum += right;
+
+    while(sum > n && left <= right){
+      sum -= left;
+      left++;
+    }      
+    
+    // 조건 만족했을때 처리
+    if( sum === n) {
+      answer++;
+      
+      // 여기서 처리해줘야 빠르네??
+      // 위 while문으로 처리 넘기면
+      // 느려짐 while문에서 조건한번이 시간 은근 먹는듯
+      sum -= left;
+      left++;
+    }
+  }
+
+  return answer;
+}
+
+
 //  수학식 접근
-function solution2(n) {
+function solution(n) {
   let answer = 0;
 
   for (let i = 1; i <= n; i++) {
