@@ -16,12 +16,13 @@ for (let i = 1; i < input.length; i++) {
 }
 
 const direc = [
+  [0, 0],
   [0, 1],
   [1, 0],
   [0, -1],
   [-1, 0],
 ];
-const visted = Array.from({ length: n }, () => Array(m).fill(false));
+const visited = Array.from({ length: n }, () => Array(m).fill(false));
 
 let wolf = 0;
 let sheep = 0;
@@ -39,12 +40,13 @@ const dfs = (x, y) => {
       ny >= 0 &&
       nx < n &&
       ny < m &&
-      //
-      !visted[nx][ny] &&
+      // 방문 했는지 확인
+      !visited[nx][ny] &&
       // 벽 인지 확인
       array[nx][ny] !== "#"
     ) {
-      visted[nx][ny] = true;
+      visited[nx][ny] = true;
+      // 카운트
       if (array[nx][ny] === "v") {
         wolf += 1;
       } else if (array[nx][ny] === "o") {
@@ -57,16 +59,17 @@ const dfs = (x, y) => {
 
 for (let i = 0; i < n; i++) {
   for (let j = 0; j < m; j++) {
-    if (!visted[i][j]) {
-      wolf = 0;
-      sheep = 0;
-      visted[i][j] = true;
-      dfs(i, j);
-      if (sheep > wolf) {
-        totalSheep += sheep;
-      } else {
-        totalWolf += wolf;
-      }
+    if (visited[i][j]) continue;
+
+    // 탐색 초기화
+    wolf = 0;
+    sheep = 0;
+    dfs(i, j);
+    // 조건 처리
+    if (sheep > wolf) {
+      totalSheep += sheep;
+    } else {
+      totalWolf += wolf;
     }
   }
 }

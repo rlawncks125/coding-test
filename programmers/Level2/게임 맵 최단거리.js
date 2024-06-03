@@ -4,15 +4,16 @@
 function solution(maps) {
   const n = maps.length;
   const m = maps[0].length;
-  const directions = [
-    [-1, 0], // 상
-    [1, 0], // 하
-    [0, -1], // 좌
-    [0, 1], // 우
+  const direc = [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0],
   ];
 
-  const queue = [[0, 0, 1]]; // 시작점 (0, 0)에서 시작, 초기 거리는 1
   const visited = Array.from({ length: n }, () => Array(m).fill(false));
+
+  const queue = [[0, 0, 1]]; // 시작점 (0, 0)에서 시작, 초기 거리는 1
   visited[0][0] = true;
 
   while (queue.length > 0) {
@@ -23,7 +24,7 @@ function solution(maps) {
       return dist;
     }
 
-    for (const [dx, dy] of directions) {
+    for (const [dx, dy] of direc) {
       const nx = x + dx;
       const ny = y + dy;
 
@@ -48,13 +49,12 @@ function solution(maps) {
 function solution(maps) {
   const n = maps.length;
   const m = maps[0].length;
-  const directions = [
-    [-1, 0], // 상
-    [1, 0], // 하
-    [0, -1], // 좌
-    [0, 1], // 우
+  const direc = [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0],
   ];
-
   let minDistance = Infinity;
 
   const visited = Array.from({ length: n }, () => Array(m).fill(false));
@@ -72,7 +72,7 @@ function solution(maps) {
       return;
     }
 
-    for (const [dx, dy] of directions) {
+    for (const [dx, dy] of direc) {
       const nx = x + dx;
       const ny = y + dy;
 
