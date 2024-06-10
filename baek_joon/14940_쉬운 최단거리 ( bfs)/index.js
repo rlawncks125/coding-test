@@ -39,31 +39,9 @@ for (let i = 0; i < n; i++) {
 }
 
 // bfs
-while (queue.length > 0) {
-  const [x, y] = queue.shift();
+// while (queue.length > 0) {
+//   const [x, y] = queue.shift();
 
-  for (const [dx, dy] of direc) {
-    const nx = x + dx;
-    const ny = y + dy;
-
-    if (
-      // 범위
-      nx >= 0 &&
-      ny >= 0 &&
-      nx < n &&
-      ny < m &&
-      //
-      visited[nx][ny] === -1 &&
-      +array[nx][ny] === 1
-    ) {
-      visited[nx][ny] = visited[x][y] + 1;
-      queue.push([nx, ny]);
-    }
-  }
-}
-
-// dfs 방식
-// function dfs(x, y) {
 //   for (const [dx, dy] of direc) {
 //     const nx = x + dx;
 //     const ny = y + dy;
@@ -79,13 +57,35 @@ while (queue.length > 0) {
 //       +array[nx][ny] === 1
 //     ) {
 //       visited[nx][ny] = visited[x][y] + 1;
-//       dfs(nx, ny);
+//       queue.push([nx, ny]);
 //     }
 //   }
 // }
 
-// const [x, y] = queue.shift();
-// dfs(x, y);
+// dfs 방식
+function dfs(x, y) {
+  for (const [dx, dy] of direc) {
+    const nx = x + dx;
+    const ny = y + dy;
+
+    if (
+      // 범위
+      nx >= 0 &&
+      ny >= 0 &&
+      nx < n &&
+      ny < m &&
+      //
+      visited[nx][ny] === -1 &&
+      +array[nx][ny] === 1
+    ) {
+      visited[nx][ny] = visited[x][y] + 1;
+      dfs(nx, ny);
+    }
+  }
+}
+
+const [x, y] = queue.shift();
+dfs(x, y);
 
 visited.forEach((v) => {
   console.log(...v);
