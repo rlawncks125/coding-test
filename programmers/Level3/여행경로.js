@@ -1,3 +1,4 @@
+// bfs
 function solution(tickets) {
   tickets.sort(); // 티켓을 사전 순으로 정렬합니다.
 
@@ -51,4 +52,43 @@ function solution(tickets) {
   }
 
   return [];
+}
+
+// dfs ( 백트래킹 )
+function solution(tickets) {
+  let answer = [];
+  tickets.sort(); // 티켓을 사전 순으로 정렬합니다.
+
+  const ticketList = {};
+  for (const [source, dest] of tickets) {
+    if (!ticketList[source]) ticketList[source] = [];
+    ticketList[source].push(dest);
+  }
+
+  const dfs = (current, path, maps) => {
+    if (path.length === tickets.length + 1) {
+      // 모든 티켓을 사용한 경우
+      answer = path;
+      return true; // 모든 가능한 경로를 찾은 경우 true를 반환
+    }
+
+    if (maps[current]) {
+      maps[current].forEach((next, index) => {
+        // 사용한 티켓 삭제
+        maps[current].splice(index, 1);
+
+        // 모든 가능한 경로를 찾은 경우 true를 반환
+        // 모든 가능한 경로를 찾지 못한 경우 false를 받환
+        if (dfs(next, [...path, next], maps)) return;
+
+        maps[current].splice(index, 0, next); // 백트래킹 : 사용한 티켓 다시 추가
+      });
+    }
+
+    return false; // 모든 가능한 경로를 찾지 못한 경우 false를 받환
+  };
+
+  dfs("ICN", ["ICN"], ticketList);
+
+  return answer; // 사전 순으로 정렬되었기 때문에 첫 번째 경로를 반환합니다.
 }
