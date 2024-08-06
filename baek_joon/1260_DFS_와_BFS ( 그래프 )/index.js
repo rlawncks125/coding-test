@@ -43,8 +43,17 @@ function bfs(graph, start) {
 
   visited[start] = true;
 
-  while (queue.length) {
-    const v = queue.shift();
+  // ######################## shift() 방식
+  // while (queue.length) {
+  //   const v = queue.shift();
+  // ########################
+
+  // ######################### 인덱스로 탐색
+  let queueStart = 0;
+
+  while (queueStart < queue.length) {
+    const v = queue[queueStart++];
+  // #########################
     result.push(v);
 
     for (const neighbor of graph[v]) {
@@ -57,7 +66,7 @@ function bfs(graph, start) {
 
   return result;
 }
-
+console.log(graph)
 const dfsResult = dfs(graph, V);
 const bfsResult = bfs(graph, V);
 
